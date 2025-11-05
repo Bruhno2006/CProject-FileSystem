@@ -4,6 +4,7 @@
 
 #include "fileRead.h"
 #include "fileCheck.h"
+#include "fileWrite.h"
 
 #include "fileConsole.h"
 
@@ -13,11 +14,13 @@ int console(FILE *fpointer) {
 
         printf("\nCOMMANDS: 'read' / 'r' | 'write' / 'w' / 'exit' / 'e'\n");
         printf("Type in your command: ");
-        scanf("%s", userInput);
+        fgets(userInput, sizeof(userInput), stdin);
 
-        if (strcmp(userInput, "read") == 0 || strcmp(userInput, "r") == 0) {
+        if (strcmp(userInput, "read\n") == 0 || strcmp(userInput, "r\n") == 0) {
             read(fpointer);
-        } else if (strcmp(userInput, "exit") == 0 || strcmp(userInput, "e") == 0) {
+        } else if (strcmp(userInput, "write\n") == 0 || strcmp(userInput, "w\n") == 0) {
+            write(fpointer);
+        } else if (strcmp(userInput, "exit\n") == 0 || strcmp(userInput, "e\n") == 0) {
             break;
         } else {
             printf("Command unrecognisable\n");

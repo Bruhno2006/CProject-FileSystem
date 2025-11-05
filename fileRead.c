@@ -5,10 +5,12 @@
 int read(FILE *fpointer) {
     char letter;
 
-    printf("\n\n");
+    printf("\n\n[START OF FILE]\n\n");
     while (fscanf(fpointer, "%c", &letter) != EOF) {
         printf("%c", letter);
     }
 
-    printf("\n\n[END OF FILE]");
+    printf("\n\n[END OF FILE]\n");
+
+    rewind(fpointer);
 }

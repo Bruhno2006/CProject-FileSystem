@@ -15,28 +15,26 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    char filename[100];
-    char filename2[105];
+    char filename1[100];
 
-    strcpy(filename, argv[1]);
-    strcpy(filename2, argv[1]);
+    strcpy(filename1, argv[1]);
 
-    strcat(filename2, ".txt");
-
-    if (strcmp(filename, filename2) != 0) {
-        printf("Success\n");
-        strcat(filename, ".txt");
+    if (strstr(filename1, ".txt") == NULL) {
+        printf("Adding .txt behind the user input.\n");
+        strcat(filename1, ".txt");
     } else {
-        printf("Failure");
+        printf("Not adding .txt behind the user input\n");
     }
 
-    if (check(filename) == 1) {
-        printf("\nThere is no text file found. Creating new %s file...\n", filename);
+    if (check(filename1) == 1) {
+        printf("\nThere is no text file found. Creating new %s file...\n", filename1);
     }
 
-    fpointer = fopen(filename, "a+");
+    fpointer = fopen(filename1, "a+");
 
     console(fpointer);
 
     fclose(fpointer);
+
+    return 0;
 }
