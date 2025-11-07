@@ -19,11 +19,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    if ((check(argv[1])) == 1) {
-        return 1;
-    } else {
-        console(fpointer);
-    }
+    console(fpointer);
 
     return 0;
 }

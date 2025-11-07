@@ -2,11 +2,12 @@
 #include "fileCheck.h"
 
 int check(char* fileInput) {
-    FILE* fp = fopen(fileInput, "r");
+    FILE *fp = fopen(fileInput, "r");
 
     if (fp == NULL) {
+        perror("Error opening file");
         return 1;
-    } else {
-        return 0;
     }
+
+    return 0;
 }

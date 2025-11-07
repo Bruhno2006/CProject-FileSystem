@@ -5,6 +5,8 @@
 #include "fileCheck.h"
 #include "fileOpen.h"
 
+char currentFile[256];
+
 bool valid_extension(const char *fileInput) {
     char *dot = strrchr(fileInput, '.');
     if (!dot) {
@@ -15,12 +17,20 @@ bool valid_extension(const char *fileInput) {
     long num_valid = sizeof(valid_ext) / sizeof(valid_ext[0]);
 
     for (long i = 0; i < num_valid; i++) {
-        if (strcmp(dot, valid_ext[1]) == 0) {
+        if (strcmp(dot, valid_ext[i]) == 0) {
             return true;
         }
     }
 
     return false;
+}
+
+void getFile() {
+    if (currentFile[0] != '\0') {
+        printf("Currently using %s\n\n", currentFile);
+    } else {
+        perror("CAN'T GET FILE");
+    }
 }
 
 bool splitFile(const char *filepath, char *name, char *ext) {
@@ -48,7 +58,7 @@ FILE* opentype(char* file, char* filetype) {
 
     strcpy(filename, file);
 
-    if (!valid_extension(filename)) {
+    if (!valid_extension(filetype)) {
         return NULL;
     }
 
@@ -59,6 +69,8 @@ FILE* opentype(char* file, char* filetype) {
     if (check(filename) == 1) {
         printf("\nThere is no %s file found. Creating new %s file...\n", filetype, filename);
     }
+
+    strcpy(currentFile, filename);
 
     return fopen(filename, "a+");
 }
@@ -77,9 +89,7 @@ FILE* open(char* file) {
     strcat(filename, ".");
     strcat(filename, filetype);
 
-    if (strstr(filename, filetype) == NULL) {
-        strcat(filename, filetype);
-    }
+    strcpy(currentFile, filename);
 
     if (check(filename) == 1) {
         printf("\nThere is no text file found. Creating new %s file...\n", filename);
