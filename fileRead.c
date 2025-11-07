@@ -10,7 +10,7 @@ int read(FILE *fpointer) {
         printf("%c", letter);
     }
 
-    printf("\n\n[END OF FILE]\n");
+    printf("\n\n[END OF FILE]\n\n");
 
     rewind(fpointer);
 }
