@@ -33,9 +33,9 @@ void saveFile(char *fname) {
 
 char* getFile () {
     FILE *savefilep = fopen("savefile.txt", "r");
-    char fname[100];
-
-    return fgets(fname, 100, savefilep);
+    static char fname[100];
+    fgets(fname, 100, savefilep);
+    return fname;
 }
 
 bool splitFile(const char *filepath, char *name, char *ext) {
@@ -54,6 +54,11 @@ bool splitFile(const char *filepath, char *name, char *ext) {
     strcpy(ext, dot + 1);
 
     return true;
+}
+
+FILE* change_handling(FILE *fpointer, char *handle) {
+    fclose(fpointer);
+    return fopen(getFile(), handle);
 }
 
 FILE* opentype(char* file, char* filetype) {

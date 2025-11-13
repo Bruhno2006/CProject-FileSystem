@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-int write(FILE *fpointer);
+int write(FILE *fpointer, char *handle);
 
 #endif
