@@ -7,6 +7,6 @@ FILE* opentype(char* file, char* fileType);
 
 FILE* open(char* file);
 
-void getFile();
+char* getFile();
 
 #endif

@@ -2,10 +2,9 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "fileWrite.h"
 #include "fileCheck.h"
 #include "fileOpen.h"
-
-char currentFile[256];
 
 bool valid_extension(const char *fileInput) {
     char *dot = strrchr(fileInput, '.');
@@ -25,12 +24,18 @@ bool valid_extension(const char *fileInput) {
     return false;
 }
 
-void getFile() {
-    if (currentFile[0] != '\0') {
-        printf("Currently using %s\n\n", currentFile);
-    } else {
-        perror("CAN'T GET FILE");
-    }
+void saveFile(char *fname) {
+    FILE *savefilep = fopen("savefile.txt", "w+");
+
+    fprintf(savefilep, "%s", fname);
+    fclose(savefilep);
+}
+
+char* getFile () {
+    FILE *savefilep = fopen("savefile.txt", "r");
+    char fname[100];
+
+    return fgets(fname, 100, savefilep);
 }
 
 bool splitFile(const char *filepath, char *name, char *ext) {
@@ -69,8 +74,8 @@ FILE* opentype(char* file, char* filetype) {
     if (check(filename) == 1) {
         printf("\nThere is no %s file found. Creating new %s file...\n", filetype, filename);
     }
-
-    strcpy(currentFile, filename);
+    
+    saveFile(filename);
 
     return fopen(filename, "a+");
 }
@@ -89,11 +94,11 @@ FILE* open(char* file) {
     strcat(filename, ".");
     strcat(filename, filetype);
 
-    strcpy(currentFile, filename);
-
     if (check(filename) == 1) {
-        printf("\nThere is no text file found. Creating new %s file...\n", filename);
+        printf("\nThere is no %s file found. Creating new %s file...\n", filetype, filename);
     }
 
+    saveFile(filename);
+    
     return fopen(filename, "a+");
 }
