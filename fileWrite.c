@@ -3,16 +3,20 @@
 #include <stdbool.h>
 #include "fileWrite.h"
 
-int write(FILE *fpointer) {
+int write(FILE *fpointer, char *handle) {
     char userText[100];
+    char line[256];
     char *result;
     char letter;
+    bool overwrite = false;
     
     printf("Type [EXIT] or [END] to stop writing mode.\n");
     printf("\n\n[WRITING MODE ON]\n\n");
 
-    while (fscanf(fpointer, "%c", &letter) != EOF) {
-        printf("%c", letter);
+    if (strcmp(handle, "w") == 0) {
+        while (fscanf(fpointer, "%c", &letter) != EOF && overwrite == false) {
+            printf("%c", letter);
+        }
     }
 
     while (fgets(userText, sizeof(userText), stdin) != NULL) {

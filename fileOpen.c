@@ -1,0 +1,109 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#include "fileWrite.h"
+#include "fileCheck.h"
+#include "fileOpen.h"
+
+bool valid_extension(const char *fileInput) {
+    char *dot = strrchr(fileInput, '.');
+    if (!dot) {
+        return false;
+    }
+
+    char *valid_ext[] = {".txt", ".py", ".c", ".java"};
+    long num_valid = sizeof(valid_ext) / sizeof(valid_ext[0]);
+
+    for (long i = 0; i < num_valid; i++) {
+        if (strcmp(dot, valid_ext[i]) == 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void saveFile(char *fname) {
+    FILE *savefilep = fopen("savefile.txt", "w+");
+
+    fprintf(savefilep, "%s", fname);
+    fclose(savefilep);
+}
+
+char* getFile () {
+    FILE *savefilep = fopen("savefile.txt", "r");
+    static char fname[100];
+    fgets(fname, 100, savefilep);
+    return fname;
+}
+
+bool splitFile(const char *filepath, char *name, char *ext) {
+    const char *dot = strrchr(filepath, '.');
+
+    if (!dot || dot == filepath) {
+        strcpy(name, filepath);
+        ext[0] = '\0';
+        return false;
+    }
+
+    size_t name_len = dot - filepath;
+    strncpy(name, filepath, name_len);
+    name[name_len] = '\0';
+
+    strcpy(ext, dot + 1);
+
+    return true;
+}
+
+FILE* change_handling(FILE *fpointer, char *handle) {
+    fclose(fpointer);
+    return fopen(getFile(), handle);
+}
+
+FILE* opentype(char* file, char* filetype) {
+    FILE *fpointer;
+
+    char filename[100];
+
+    strcpy(filename, file);
+
+    if (!valid_extension(filetype)) {
+        return NULL;
+    }
+
+    if (strstr(filename, filetype) == NULL) {
+        strcat(filename, filetype);
+    }
+
+    if (check(filename) == 1) {
+        printf("\nThere is no %s file found. Creating new %s file...\n", filetype, filename);
+    }
+    
+    saveFile(filename);
+
+    return fopen(filename, "a+");
+}
+
+FILE* open(char* file) {
+    FILE *fpointer;
+
+    char filename[100], filetype[50];
+
+    splitFile(file, filename, filetype);
+
+    if (!valid_extension(file)) {
+        return NULL;
+    }
+
+    strcat(filename, ".");
+    strcat(filename, filetype);
+
+    if (check(filename) == 1) {
+        printf("\nThere is no %s file found. Creating new %s file...\n", filetype, filename);
+    }
+
+    saveFile(filename);
+    
+    return fopen(filename, "a+");
+}
