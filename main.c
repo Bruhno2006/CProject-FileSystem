@@ -20,6 +20,7 @@ int main(int argc, char* argv[]) {
     }
 
     console(fpointer);
+    wipeSaveFile();
 
     return 0;
 }
