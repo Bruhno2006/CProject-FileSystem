@@ -29,7 +29,7 @@ int write(FILE *fpointer, char *handle) {
         fprintf(fpointer, "%s\n", userText);
     }
 
-    printf("\n[WRITING MODE OFF]\n");
+    printf("\n[WRITING MODE OFF]\n\n");
 
     rewind(fpointer);
 }
