@@ -31,6 +31,10 @@ void saveFile(char *fname) {
     fclose(savefilep);
 }
 
+void wipeSaveFile() {
+    remove("saveFile.txt");
+}
+
 char* getFile () {
     FILE *savefilep = fopen("savefile.txt", "r");
     static char fname[100];

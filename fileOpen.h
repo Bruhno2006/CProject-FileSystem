@@ -11,4 +11,6 @@ FILE* change_handling(FILE* fpointer, char *handle);
 
 char* getFile();
 
+void wipeSaveFile();
+
 #endif
