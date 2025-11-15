@@ -35,7 +35,6 @@ int console(FILE *fpointer) {
             if (fp == NULL) {
                 printf("\nThere is no file opened to write.\n\n");
             } else {
-                fp = change_handling(fp, "w");
                 write(fp, "w");
             }
         } else if (strcmp(userInput, "close\n") == 0 || strcmp(userInput, "cl\n") == 0) {
@@ -48,7 +47,6 @@ int console(FILE *fpointer) {
             }
         } else if (strcmp(userInput, "open\n") == 0 || strcmp(userInput, "op\n") == 0) {
             if (fp != NULL) {
-                printf("close");
                 fclose(fp);
                 fp = NULL;
             }
